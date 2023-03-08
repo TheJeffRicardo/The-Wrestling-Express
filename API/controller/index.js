@@ -42,6 +42,8 @@ router.delete('/user/:id', (req, res)=>{
 
 router.get('/superstars', (req, res)=> {
     superstar.fetchSuperstars(req, res);
+
+    
 })
 
 router.get('/superstar/:id', (req, res)=> {

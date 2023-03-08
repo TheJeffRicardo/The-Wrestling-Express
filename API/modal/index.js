@@ -8,8 +8,8 @@ class User {
         const {emailAdd, userPass} = req.body;
         const strQry = 
         `
-        SELECT firstName, lastName, gender, emailAdd, userPass, userRole, userProfile
-        FROM Users
+        SELECT user_id, firstName, lastName, gender, cellphoneNumber, emailAdd, userPass, joinDate
+        FROM users
         WHERE emailAdd = '${emailAdd}';
         `
         db.query(strQry, async (err, data)=>{
@@ -18,10 +18,10 @@ class User {
                 res.status(401).json({err: 
                     "You provide a wrong email address"})
             }else {
-                await compare(userPass, 
+                compare(userPass, 
                     data[0].userPass, 
                     (cErr, cResult)=> {
-                        if(cErr) throw cErr
+                        if(cErr) throw cErr;
                         const jwToken = 
                         createToken(
                             {
@@ -76,8 +76,7 @@ class User {
     }
     async createUser(req, res) {
         let detail = req.body
-        detail.userPass = await 
-        hash(detail.userPass, 15)
+        detail.userPass = await hash(detail.userPass, 10)
         let user = {
             emailAdd: detail.emailAdd,
             userPass: detail.userPass
