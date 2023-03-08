@@ -40,27 +40,25 @@ router.delete('/user/:id', (req, res)=>{
     user.deleteUser(req, res);
 });
 
-router.get('/superstars', (req, res)=> {
+router.get('/items', (req, res)=> {
     superstar.fetchSuperstars(req, res);
-
-    
 })
 
-router.get('/superstar/:id', (req, res)=> {
+router.get('/item/:id', (req, res)=> {
     superstar.fetchSuperstar(req, res);
 })
 
-router.post('/superstar', bodyParser.json(), 
+router.post('/item', bodyParser.json(), 
 (req, res)=> {
     superstar.addSuperstar(req, res);
 })
 
-router.put('/superstar/:id', bodyParser.json(),
+router.put('/item/:id', bodyParser.json(),
 (req, res)=> {
     superstar.updateSuperstar(req, res);
 })
 
-router.delete('/superstar/:id', 
+router.delete('/item/:id', 
 (req, res)=> {
     superstar.deleteSuperstar(req, res);
 })

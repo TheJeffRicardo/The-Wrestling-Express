@@ -2,7 +2,7 @@ const db = require('../config')
 
 const {hash, compare, hashSync} = require('bcrypt')
 
-const {createToken} = require('../middleware/authenticatedUser')
+const {createToken} = require('../middleware/AuthenticatedUser')
 class User {
     login(req, res) {
         const {emailAdd, userPass} = req.body;
@@ -76,7 +76,7 @@ class User {
     }
     async createUser(req, res) {
         let detail = req.body
-        detail.userPass = await hash(detail.userPass, 10)
+        detail.userPass = await hash(detail.userPass, 15)
         let user = {
             emailAdd: detail.emailAdd,
             userPass: detail.userPass
