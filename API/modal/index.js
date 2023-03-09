@@ -18,7 +18,7 @@ class User {
                 res.status(401).json({err: 
                     "You provide a wrong email address"})
             }else {
-                compare(userPass, 
+                compare(userPass,
                     data[0].userPass, 
                     (cErr, cResult)=> {
                         if(cErr) throw cErr;
@@ -168,7 +168,6 @@ class Superstar {
                 }
             }
         );    
-
     }
     updateSuperstar(req, res) {
         const strQry = 
@@ -201,8 +200,41 @@ class Superstar {
     }
 
 }
+class Cart {
+    cartFetch(req, res) {
+        const strQry = `select s.sup_id, s.sup_name, 
+        s.sup_URL, s.sup_price
+        from cart
+        inner join users u 
+        using(user_id)
+        inner join superstars s
+        using(sup_id);`
+        db.query(strQry, [req.params.id], (err, results)=> {
+            if(err) throw err
+            res.status(200).json({results: results})
+        });
+    }
+    cartAdd(req, res) {
+        const strQry = 
+        `
+        INSERT INTO cart
+        SET ?;
+        `
+        db.query(strQry,[req.body],
+            (err)=> {
+                if(err){
+                    res.status(400).json({err: "Unable to insert into Cart"})
+                    console.log(err);
+                }else {
+                    res.status(200).json({msg: "Successfully Added to Cart"})
+                }
+            }
+        );    
+    }
+}
 
 module.exports = {
     User, 
-    Superstar
+    Superstar,
+    Cart
 }

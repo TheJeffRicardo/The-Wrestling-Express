@@ -6,11 +6,13 @@ const bodyParser = require('body-parser')
 
 const router = express.Router()
 
-const {User, Superstar} = require('../modal')
+const {User, Superstar, Cart} = require('../modal')
 
 const user = new User()
 
 const superstar = new Superstar()
+
+const cart = new Cart()
 
 router.get('^/$|/YoMama', (req, res)=>{
     res.status(200).sendFile(path.join(__dirname, '../view/index.html'))
@@ -61,6 +63,16 @@ router.put('/item/:id', bodyParser.json(),
 router.delete('/item/:id', 
 (req, res)=> {
     superstar.deleteSuperstar(req, res);
+})
+
+router.get('/user/:id/cart',  
+(req, res)=> {
+    cart.cartFetch(req, res);
+})
+
+router.post('/user/:id/cart', 
+(req, res)=> {
+    cart.cartAdd(req, res);
 })
 
 module.exports = router;
