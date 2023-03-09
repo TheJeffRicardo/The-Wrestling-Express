@@ -70,7 +70,7 @@ router.get('/user/:id/cart',
     cart.cartFetch(req, res);
 })
 
-router.post('/user/:id/cart', 
+router.post('/user/:id/cart', bodyParser.json(), 
 (req, res)=> {
     cart.cartAdd(req, res);
 })

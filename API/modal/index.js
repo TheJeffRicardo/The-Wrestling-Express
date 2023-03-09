@@ -202,14 +202,13 @@ class Superstar {
 }
 class Cart {
     cartFetch(req, res) {
-        const strQry = `select s.sup_id, s.sup_name, 
-        s.sup_URL, s.sup_price
+        const strQry = `select sup_id, sup_name, 
+        sup_URL, sup_price
         from cart
-        inner join users u 
-        using(user_id)
-        inner join superstars s
-        using(sup_id);`
-        db.query(strQry, [req.params.id], (err, results)=> {
+        inner join superstars
+        using(sup_id)
+        where cart.user_id = ${req.params.id};`
+        db.query(strQry, (err, results)=> {
             if(err) throw err
             res.status(200).json({results: results})
         });
