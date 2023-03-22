@@ -41,6 +41,11 @@ export default {
         items
       }
   },
+  data(){
+    return {
+      details: this.$route.params
+    }
+  },
   computed: {
     counter(){
       return this.$store.state.counter

@@ -28,6 +28,7 @@ export default createStore({
     setUser(state, value) {
       state.user = value
       state.userAuth = true
+      localStorage.setItem("user", JSON.stringify(state.user))
     },
     setProducts(state, values) {
       state.products = values
@@ -194,9 +195,15 @@ export default createStore({
         context.commit('setMessage', err)
       }
     },
-    removeItemFromCart(product){
-      this.cart.splice(this.cart.indexOf(product))
-    }
+    async fetchItemFromCart(context) {
+      const res = await axios.get(`${api}user/${id}/cart`)
+      let {results, err} = await res.data
+      if(results){
+        context.commit('setProducts', results)
+      }else{
+        context.commit('setMessage', err)
+      }
+    },
   },
   modules: {
   }

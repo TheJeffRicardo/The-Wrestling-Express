@@ -1,11 +1,11 @@
 <template>
-    <div class="color">
+    <div class="color" v-for="user in userFetch" :key="user">
       <img class="pics" src='https://i.postimg.cc/3rZ0H0D8/profile-Image.png' alt="picofyou">
-      <h3>JeffRicardo</h3>
-      <p>Web Developer and WordSmith</p>
-      <div class="white">
-        <p>Learn more about me</p>
-      </div>
+        <h5>{{user.firstName}}</h5>
+        <h5>{{user.lastName}}</h5>
+        <h5>{{user.gender}}</h5>
+        <h5>{{user.cellphoneNumber}}</h5>
+        <h5>{{user.emailAdd}}</h5>
     </div>
   </template>
   <script>
@@ -14,8 +14,8 @@
   export default {
     setup() {
         const store = useStore()
-        store.dispatch("fetchUsers")
-        const userFetch = computed( ()=>store.state.users)
+        store.dispatch("fetchUser")
+        const userFetch = computed( ()=>store.state.user)
         return {
           userFetch
         }

@@ -12,7 +12,16 @@ const routes = [
     path: '/admin',
     name: 'admin-',
     component: () => import('../views/AdminView.vue'),
-    meta: { requiresAuth: true}
+    // beforeEnter(to, from, next){
+    //   if ( to.name !== 'login'){
+    //      next({
+    //        path: '/login',
+    //        replace: true
+    //      })
+    //   } else {
+    //      next()
+    //   }
+    // }
   },
   {
     path: '/login',
@@ -33,13 +42,31 @@ const routes = [
     path: '/userprofile',
     name: 'userprofile-',
     component: () => import('../views/UserProfileView.vue'),
-    meta: { requiresAuth: true}
+    // beforeEnter(to, from, next){
+      //   if ( to.name !== 'login'){
+      //      next({
+      //        path: '/login',
+      //        replace: true
+      //      })
+      //   } else {
+      //      next()
+      //   }
+      // }
   },
   {
     path: '/contact',
     name: 'con-tact',
     component: () => import('../views/ContactFormView.vue'),
-    meta: { requiresAuth: true}
+    // beforeEnter(to, from, next){
+      //   if ( to.name !== 'login'){
+      //      next({
+      //        path: '/login',
+      //        replace: true
+      //      })
+      //   } else {
+      //      next()
+      //   }
+      // }
   },
   {
     path: '/single-product/:id',
