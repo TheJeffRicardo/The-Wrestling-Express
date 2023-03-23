@@ -10,18 +10,30 @@
             <li><router-link to="/registration"><i class="bi bi-clipboard-check"></i></router-link></li>
             <li><router-link to="/userprofile"><i class="bi bi-person-circle"></i></router-link></li>
             <li> <router-link to="/contact"><i class="bi bi-envelope-at"></i></router-link></li>
-            <button @click.prevent="logout" v-if="this.$store.state.userAuth">Logout</button>
+            <button @click="logout" v-if="this.$store.state.userAuth">Logout</button>
         </ul>
     </nav> 
 </div>            
 </template>
 <script>
+// export default {
+//     name: 'nav-bar',
+//     data() {
+//         return {
+//             this.$store.state.logOut
+//         }
+//     }
+// }
+import { useStore  } from 'vuex';
 export default {
-    name: 'nav-bar',
-    methods: {
-        logout(){
-            console.log('Logging Out');
-        }
+  setup() {
+      const store = useStore()
+      const logout = ()=> {
+        store.dispatch('logout')
+      }
+      return {
+        logout
+      }
     }
 }
 </script>

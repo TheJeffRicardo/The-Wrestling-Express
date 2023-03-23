@@ -42,41 +42,42 @@
 
   <div class="structures">
     <div class="btnh2"><h2>Product's Table</h2><AddProduct></AddProduct></div>
-    <div class="table">
-      <table class="table">
-        <thead class="table-light">
-          <tr>
-            <th scope="col">id</th>
-            <th scope="col">superstar</th>
-            <th scope="col">song</th>
-            <th scope="col">finisher</th>
-            <th scope="col">price</th>
-            <th scope="col">imgURL</th>
-            <th scope="col">Delete</th>
-            <th scope="col">Update</th>
-          </tr>
-        </thead>
-
-        <tbody class="table-light">
-          <Spinner class="spinner" v-if="isLoading" />
-          <div v-else></div>
-          <tr v-for="item in items" :key="items">
-            <td>{{item.sup_id}}</td>
-            <td>{{item.sup_name}}</td>
-            <td><i class="bi bi-music-note"></i>{{item.sup_song}}<i class="bi bi-music-note"></i></td>
-            <td>{{item.sup_finisher}}</td>
-            <td>R{{item.sup_price}}</td>
-            <td><img :src=item.sup_URL alt="picsofsuperstars" style="width: 8rem;"></td>
-            <td><button type="button" class="btn btn-outline-danger" @click.prevent="deleteProduct(item.user_id)"><i class="bi bi-trash"></i>Delete</button>
-            </td>
-            <td><button type="button" class="btn btn-outline-warning" @click.prevent="updateProduct(item.userID)">Update</button>
-            </td>
-           </tr>
-        </tbody>
-      </table>
+    <Spinner class="spinner" v-if="isLoading" />
+    <div v-else>
+      <div class="table">
+        <table class="table">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">superstar</th>
+              <th scope="col">song</th>
+              <th scope="col">finisher</th>
+              <th scope="col">price</th>
+              <th scope="col">imgURL</th>
+              <th scope="col">Delete</th>
+              <th scope="col">Update</th>
+            </tr>
+          </thead>
+          
+          <tbody class="table-light">
+            <tr v-for="item in items" :key="items">
+              <td>{{item.sup_id}}</td>
+              <td>{{item.sup_name}}</td>
+              <td><i class="bi bi-music-note"></i>{{item.sup_song}}<i class="bi bi-music-note"></i></td>
+              <td>{{item.sup_finisher}}</td>
+              <td>R{{item.sup_price}}</td>
+              <td><img :src=item.sup_URL alt="picsofsuperstars" style="width: 8rem;"></td>
+              <td><button type="button" class="btn btn-outline-danger" @click.prevent="deleteProduct(item.user_id)"><i class="bi bi-trash"></i>Delete</button>
+              </td>
+              <td><button type="button" class="btn btn-outline-warning" @click.prevent="updateProduct(item.userID)">Update</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
     </div>
-  </div>
-</template>
+  </template>
 <script>
 import {computed} from '@vue/runtime-core';
 import { useStore  } from 'vuex';
@@ -119,7 +120,7 @@ export default {
     },
     data () {
       return {
-        isLoading: false,
+        isLoading: true,
       }
     },
     created(){

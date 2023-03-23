@@ -6,7 +6,7 @@
     <label>Password</label>
     <input type="password" v-model="payload.userPass" required>
     <label class="form-control bg-gradient" v-show="userMsg">{{userMsg}}</label>
-    <button @click.prevent="login">Login</button>
+    <button @click.prevent="login" v-if="this.$store.state.userAuth === false">Login</button>
     <a href="/registration">
       <div class="register">
         <p>Wanna Sign Up?</p>

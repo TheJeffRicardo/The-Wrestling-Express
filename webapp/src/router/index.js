@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import { store  } from 'vuex';
+import Cookies from 'js-cookie'
 
 const routes = [
   {
@@ -12,14 +12,9 @@ const routes = [
     path: '/admin',
     name: 'admin-',
     component: () => import('../views/AdminView.vue'),
-    // beforeEnter(to, from, next){
-    //   if ( to.name !== 'login'){
-    //      next({
-    //        path: '/login',
-    //        replace: true
-    //      })
-    //   } else {
-    //      next()
+    // beforeEnter() {
+    //   if(!Cookies.get('myUser')){
+    //     router.push({name: 'login-'})
     //   }
     // }
   },
@@ -42,36 +37,31 @@ const routes = [
     path: '/userprofile',
     name: 'userprofile-',
     component: () => import('../views/UserProfileView.vue'),
-    // beforeEnter(to, from, next){
-      //   if ( to.name !== 'login'){
-      //      next({
-      //        path: '/login',
-      //        replace: true
-      //      })
-      //   } else {
-      //      next()
-      //   }
-      // }
+    // beforeEnter() {
+    //   if(!Cookies.get('myUser')){
+    //     router.push({name: 'login-'})
+    //   }
+    // }
   },
   {
     path: '/contact',
     name: 'con-tact',
     component: () => import('../views/ContactFormView.vue'),
-    // beforeEnter(to, from, next){
-      //   if ( to.name !== 'login'){
-      //      next({
-      //        path: '/login',
-      //        replace: true
-      //      })
-      //   } else {
-      //      next()
-      //   }
-      // }
+    // beforeEnter() {
+    //   if(!Cookies.get('myUser')){
+    //     router.push({name: 'login-'})
+    //   }
+    // }
   },
   {
     path: '/single-product/:id',
     name: 'single-product',
-    component: () => import('../views/SingleProductView.vue')
+    component: () => import('../views/SingleProductView.vue'),
+    // beforeEnter() {
+    //   if(!Cookies.get('myUser')){
+    //     router.push({name: 'login-'})
+    //   }
+    // }
   }
 ]
 
@@ -89,8 +79,10 @@ const router = createRouter({
 
 // router.beforeEach( (to, from, next)=> {
 //   const userAuthCheck = false
+//   const store = useStore()
+//   const userFetch = computed( ()=>store.state.user)
 //   if(to.matched.some(record => record.meta.requiresAuth)){
-//     if(userAuthCheck){  //user is Auth
+//     if(userAuthCheck === userFetch ){  //user is Auth
 //       next()
 //     }else{  //user is not auth
 //       router.push('/login')

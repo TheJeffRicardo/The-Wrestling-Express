@@ -50,7 +50,12 @@
     <div class="form-control-wrapper">
       <label class="form-control bg-gradient" v-show="userMsg">{{userMsg}}</label>
     </div>
-    <button type="submit" v-on:click.prevent="signUp(payload)">Register</button>
+    <a href="/login">
+      <div class="login">
+        <p>Already have an account?</p>
+      </div>
+    </a>
+    <button type="submit" v-on:click.prevent="signUp(payload)" v-if="this.$store.state.userAuth === false">Register</button>
 </form>
 </template>
 <script>
@@ -137,7 +142,6 @@ h1{
 button{
   width: 40%;
   height: 10%;
-  margin: 3% auto;
   color: #1B1B1B;
   font-size: 15px;
   background: rgba(255, 255, 255, 0.06);
@@ -150,6 +154,14 @@ button{
 button:hover{
   color: rgba(255, 255, 255, 0.9);
   background-color: #1B1B1B;
+}
+a{
+  font-size: 12px;
+  color: #1B1B1B;
+  text-decoration: none;
+}
+a:hover{
+  font-weight: bold;
 }
 </style>
   

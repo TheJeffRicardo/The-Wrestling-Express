@@ -9,6 +9,7 @@ export default createStore({
     users: null,
     user: null,
     userAuth: false,
+    logOut: null,
     products: null,
     product: null,
     cart: [],
@@ -30,6 +31,10 @@ export default createStore({
       state.userAuth = true
       localStorage.setItem("user", JSON.stringify(state.user))
     },
+    setLogout(state, value){
+      state.logOut = value
+      state.userAuth = false
+    },
     setProducts(state, values) {
       state.products = values
     },
@@ -48,12 +53,6 @@ export default createStore({
     setCounter(state, value){
       state.counter = value
     },
-    setLogout(state, value){
-      state.logout = value
-      state.userAuth = false
-      state.user = null
-      state.token = null
-    },
     addToCart(state, product) {
       
     },
@@ -70,14 +69,15 @@ export default createStore({
   actions: {
     async login(context, payload) {
       console.log('This might take a minute')
+      context.commit('setMessage', 'This may take a while...')
       try{
-      const res = await axios.post(`${api}login`, payload)
+        const res = await axios.post(`${api}login`, payload)
       const {result, jwToken, msg, err} = res.data
       if(result){
         context.commit('setUser', result)
         context.commit('setMessage', msg)
         context.commit('setToken', jwToken)
-        Cookies.set('token-of-user', jwToken)
+        Cookies.set('myUser', jwToken)
       }else{
         context.commit('setMessage', err)
       }
@@ -85,7 +85,14 @@ export default createStore({
         console.error(error);
       }
     },
+    async logout(context) {
+        context.commit('setUser', null)
+        context.commit('setToken', null)
+        Cookies.remove('myUser')
+        location.reload()
+    },
     async register(context, payload) {
+      context.commit('setMessage', 'This may take a while')
         const res = await axios.post(`${api}register`, payload)
         console.log(res, 'This may take a while');
         let {msg, err} = res.data
