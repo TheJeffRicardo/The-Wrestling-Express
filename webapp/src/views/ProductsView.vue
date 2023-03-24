@@ -19,7 +19,7 @@
           <p>Mid Card Champions Won: {{items.mid_card_champ}}</p>
           <p>Tag Team Champions Won: {{items.tag_champ}}</p>
         </div>    
-       <router-link :to="{name: 'single-product', params: {id: items.sup_id}}"><button >View More</button></router-link>
+       <router-link :to="{name: 'single-product', params: {id: items.sup_id}}"><button v-if="this.$store.state.userAuth">View More</button></router-link>
       </div>
     </div>
     <div v-else class="display-6"><img src="https://i.postimg.cc/Gtgp9gLY/unnamed.gif" alt="stone cold steve austin"><pre style="font-weight: 600;">Can't find the Name 
@@ -114,7 +114,14 @@ input:focus {
   border: none;
   outline: none;
   border-radius: 10px 0px 10px 0px ;
+  background-color: #777;
+  transition: 0.1s;
+}
+.sort:hover{
   background-color: #c3c1c0;
+}
+.sort:active{
+  transform: scale(0.95);
 }
 .card {
   width: 17em;
@@ -155,13 +162,16 @@ input:focus {
   transition: 0.3s;
 }
 
-.card a {
-  text-decoration: none;
-}
-
 .card button:hover {
   background: #1B1B1B;
   color: #c3c3c3;
 }
+.card button:active {
+  transform: scale(0.95);
+}
+.card a {
+  text-decoration: none;
+}
+
 </style>
   

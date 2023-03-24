@@ -12,7 +12,7 @@ export default createStore({
     logOut: null,
     products: null,
     product: null,
-    cart: [],
+    cart: null,
     token: null,
     showSpinner: false,
     message: null,
@@ -53,8 +53,8 @@ export default createStore({
     setCounter(state, value){
       state.counter = value
     },
-    addToCart(state, product) {
-      
+    setCart(state, value) {
+      state.cart = value
     },
     filterByPrice: (state) => {
       state.products.sort((a, b) => {
@@ -78,11 +78,14 @@ export default createStore({
         context.commit('setMessage', msg)
         context.commit('setToken', jwToken)
         Cookies.set('myUser', jwToken)
+        Cookies.set('userInfo', result.user_id)
+        console.log(result.user_id);
       }else{
         context.commit('setMessage', err)
       }
-      }catch(error){
-        console.error(error);
+    }catch(error){
+      console.error(error);
+      context.commit('setMessage', error)
       }
     },
     async logout(context) {
@@ -103,7 +106,6 @@ export default createStore({
           }
     },
     async fetchUsers(context) {
-
       const res = await axios.get(`${api}users`)
       let {results, err} = await res.data
       if(results){
@@ -196,17 +198,19 @@ export default createStore({
       const res = await axios.post(`${api}user/${id}/cart`)
       let {result, msg, err} = await res.data
       if(result){
-        context.commit('setUser', result[0])
+        context.commit('setCart', result[0])
         context.commit('setMessage', msg)
       }else{
         context.commit('setMessage', err)
       }
     },
-    async fetchItemFromCart(context) {
-      const res = await axios.get(`${api}user/${id}/cart`)
+    async fetchItemsFromCart(context) {
+      let user = Cookies.get('userInfo')
+      const res = await axios.get(`${api}user/${user}/cart`)
       let {results, err} = await res.data
       if(results){
-        context.commit('setProducts', results)
+        context.commit('setCart', results)
+        console.log(results.user_id)
       }else{
         context.commit('setMessage', err)
       }

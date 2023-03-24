@@ -1,83 +1,83 @@
 <template>
-  <div class="structure">
-    <div class="btnh2"><h2>User's Table</h2><AddUser></AddUser></div>
-    <Spinner class="spinner" v-if="isLoading" />
-    <div v-else>
+<div class="structure">
+  <div class="btnh2"><h2>User's Table</h2><AddUser></AddUser></div>
+  <Spinner class="spinner" v-if="isLoading" />
+  <div v-else>
+  <div class="table">
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">firstName</th>
+          <th scope="col">lastName</th>
+          <th scope="col">gender</th>
+          <th scope="col">cellphoneNumber</th>
+          <th scope="col">emailAdd</th>
+          <th scope="col">userPass</th>
+          <th scope="col">joinDate</th>
+          <th scope="col">Delete</th>
+          <th scope="col">Update</th>
+        </tr>
+      </thead>
+      
+      <tbody class="table-light">
+        <tr v-for="user in users" :key="user">
+            <td>{{user.user_id}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.gender}}</td>
+            <td>{{user.cellphoneNumber}}</td>
+            <td>{{user.emailAdd}}</td>
+            <td>***{{user.userPass}}***</td>
+            <td>{{user.joinDate}}</td>
+            <td><button type="button" class="btn btn-outline-danger" @click.prevent="deleteUser(user.user_id)"><i class="bi bi-trash"></i>Delete</button>
+            </td>
+            <td><UpdateUser :userData = user></UpdateUser></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="structures">
+  <div class="btnh2"><h2>Product's Table</h2><AddProduct></AddProduct></div>
+  <Spinner class="spinner" v-if="isLoading" />
+  <div v-else>
     <div class="table">
       <table class="table">
         <thead class="table-light">
           <tr>
             <th scope="col">id</th>
-            <th scope="col">firstName</th>
-            <th scope="col">lastName</th>
-            <th scope="col">gender</th>
-            <th scope="col">cellphoneNumber</th>
-            <th scope="col">emailAdd</th>
-            <th scope="col">userPass</th>
-            <th scope="col">joinDate</th>
+            <th scope="col">superstar</th>
+            <th scope="col">song</th>
+            <th scope="col">finisher</th>
+            <th scope="col">price</th>
+            <th scope="col">imgURL</th>
             <th scope="col">Delete</th>
             <th scope="col">Update</th>
           </tr>
         </thead>
         
         <tbody class="table-light">
-          <tr v-for="user in users" :key="user">
-              <td>{{user.user_id}}</td>
-              <td>{{user.firstName}}</td>
-              <td>{{user.lastName}}</td>
-              <td>{{user.gender}}</td>
-              <td>{{user.cellphoneNumber}}</td>
-              <td>{{user.emailAdd}}</td>
-              <td>***{{user.userPass}}***</td>
-              <td>{{user.joinDate}}</td>
-              <td><button type="button" class="btn btn-outline-danger" @click.prevent="deleteUser(user.user_id)"><i class="bi bi-trash"></i>Delete</button>
-              </td>
-              <td><UpdateUser :userData = user></UpdateUser></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+          <tr v-for="item in items" :key="items">
+            <td>{{item.sup_id}}</td>
+            <td>{{item.sup_name}}</td>
+            <td><i class="bi bi-music-note"></i>{{item.sup_song}}<i class="bi bi-music-note"></i></td>
+            <td>{{item.sup_finisher}}</td>
+            <td>R{{item.sup_price}}</td>
+            <td><img :src=item.sup_URL alt="picsofsuperstars" style="width: 8rem;"></td>
+            <td><button type="button" class="btn btn-outline-danger" @click.prevent="deleteProduct(item.user_id)"><i class="bi bi-trash"></i>Delete</button>
+            </td>
+            <td><button type="button" class="btn btn-outline-warning" @click.prevent="updateProduct(item.userID)">Update</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     </div>
   </div>
-
-  <div class="structures">
-    <div class="btnh2"><h2>Product's Table</h2><AddProduct></AddProduct></div>
-    <Spinner class="spinner" v-if="isLoading" />
-    <div v-else>
-      <div class="table">
-        <table class="table">
-          <thead class="table-light">
-            <tr>
-              <th scope="col">id</th>
-              <th scope="col">superstar</th>
-              <th scope="col">song</th>
-              <th scope="col">finisher</th>
-              <th scope="col">price</th>
-              <th scope="col">imgURL</th>
-              <th scope="col">Delete</th>
-              <th scope="col">Update</th>
-            </tr>
-          </thead>
-          
-          <tbody class="table-light">
-            <tr v-for="item in items" :key="items">
-              <td>{{item.sup_id}}</td>
-              <td>{{item.sup_name}}</td>
-              <td><i class="bi bi-music-note"></i>{{item.sup_song}}<i class="bi bi-music-note"></i></td>
-              <td>{{item.sup_finisher}}</td>
-              <td>R{{item.sup_price}}</td>
-              <td><img :src=item.sup_URL alt="picsofsuperstars" style="width: 8rem;"></td>
-              <td><button type="button" class="btn btn-outline-danger" @click.prevent="deleteProduct(item.user_id)"><i class="bi bi-trash"></i>Delete</button>
-              </td>
-              <td><button type="button" class="btn btn-outline-warning" @click.prevent="updateProduct(item.userID)">Update</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      </div>
-    </div>
-  </template>
+</template>
 <script>
 import {computed} from '@vue/runtime-core';
 import { useStore  } from 'vuex';

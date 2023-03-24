@@ -12,11 +12,11 @@ const routes = [
     path: '/admin',
     name: 'admin-',
     component: () => import('../views/AdminView.vue'),
-    // beforeEnter() {
-    //   if(!Cookies.get('myUser')){
-    //     router.push({name: 'login-'})
-    //   }
-    // }
+    beforeEnter() {
+      if(!Cookies.get('myUser')){
+        router.push({name: 'login-'})
+      }
+    }
   },
   {
     path: '/login',
@@ -37,11 +37,11 @@ const routes = [
     path: '/userprofile',
     name: 'userprofile-',
     component: () => import('../views/UserProfileView.vue'),
-    // beforeEnter() {
-    //   if(!Cookies.get('myUser')){
-    //     router.push({name: 'login-'})
-    //   }
-    // }
+    beforeEnter() {
+      if(!Cookies.get('myUser')){
+        router.push({name: 'login-'})
+      }
+    }
   },
   {
     path: '/contact',
@@ -62,7 +62,17 @@ const routes = [
     //     router.push({name: 'login-'})
     //   }
     // }
-  }
+  },
+  {
+    path: '/user/:id/cart',
+    name: 'cart',
+    component: () => import('../views/CartView.vue')
+    // beforeEnter() {
+    //   if(!Cookies.get('myUser')){
+    //     router.push({name: 'login-'})
+    //   }
+    // }
+  },
 ]
 
 // to - tells us information about the path 

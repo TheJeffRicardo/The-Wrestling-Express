@@ -95,6 +95,9 @@ button:hover{
   color: rgba(255, 255, 255, 0.9);
   background-color: #1B1B1B;
 }
+button:active{
+  transform: scale(0.95);
+}
 a{
   font-size: 12px;
   color: #1B1B1B;

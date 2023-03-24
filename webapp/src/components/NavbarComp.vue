@@ -2,6 +2,12 @@
 <div class="container">
     <nav>
         <img src="https://i.postimg.cc/HLzq9MPn/giphy.gif" alt="championship">
+        <div v-if="user === null" :to="`/`">
+            <router-link :to="`/login`"></router-link>
+        </div>
+        <div v-else>
+            <router-link :to="`/user/${user.user_id}/cart`"><i class="bi bi-cart4"></i></router-link>
+        </div>
         <ul class="routes">
             <li><router-link to="/"><i class="bi bi-house-door"></i></router-link></li>
             <li><router-link to="/admin"><i class="bi bi-person-check"></i></router-link></li>
@@ -16,24 +22,18 @@
 </div>            
 </template>
 <script>
-// export default {
-//     name: 'nav-bar',
-//     data() {
-//         return {
-//             this.$store.state.logOut
-//         }
-//     }
-// }
+import {computed} from '@vue/runtime-core';
 import { useStore  } from 'vuex';
 export default {
-  setup() {
-      const store = useStore()
-      const logout = ()=> {
-        store.dispatch('logout')
-      }
-      return {
-        logout
-      }
+    setup() {
+        const store = useStore()
+        const user = computed( ()=>store.state.user)
+        const logout = ()=> { store.dispatch('logout')
+        }
+        return {
+            logout,
+            user
+        }
     }
 }
 </script>
@@ -49,6 +49,9 @@ nav{
 }
 nav img{
     width: 7rem;
+}
+nav a i{
+    width: 10rem;
 }
 nav ul li{
     list-style: none;
@@ -168,5 +171,20 @@ nav ul li:nth-child(7) a.router-link-exact-active:after {
     content: "Contact";
     width: 85px;
     left: -10%;
+}
+button{
+    border: none;
+    border-radius: 3px;
+    background-color: transparent;
+    color: aliceblue;
+    transition: 0.2s;
+    font-weight: 600;
+}
+button:hover{
+    background-color: aliceblue;
+    color: #222;
+}
+button:active{
+    transform: scale(0.95);
 }
 </style>
