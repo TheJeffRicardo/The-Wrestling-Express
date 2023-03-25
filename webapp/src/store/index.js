@@ -211,11 +211,13 @@ export default createStore({
     async addItemToCart(context, payload){
       let user = Cookies.get('userInfo')
       context.commit('setMessage', 'This may take a while')
+      console.log('This may take a while')
       const res = await axios.post(`${api}user/${user}/cart`, payload)
       let {result, msg, err} = await res.data
       if(result){
         context.commit('setCart', result)
         context.commit('setMessage', msg)
+        Cookies.set('cartDetails', result)
       }else{
         context.commit('setMessage', err)
       }

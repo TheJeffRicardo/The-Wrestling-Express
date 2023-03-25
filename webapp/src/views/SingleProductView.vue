@@ -19,7 +19,7 @@
           <input type="text" placeholder="0" :value="counter" readonly>
           <button @click.prevent="increase"><i class="bi bi-plus-lg"></i></button>
         </div>
-        <button class="button" v-on:click="addToCart(user, items)">Add to Cart  <i class="bi bi-cart4"></i></button>
+        <button class="button" v-on:click.prevent="addToCart(user, items)">Add to Cart  <i class="bi bi-cart4"></i></button>
         <router-link :to="{name: 'product-'}" class="p-5" style="text-decoration: none; color: #333;"><i class="bi bi-arrow-left"></i>Back To Shop</router-link>
       </div>
     </div>
