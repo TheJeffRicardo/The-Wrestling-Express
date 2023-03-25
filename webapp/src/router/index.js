@@ -12,11 +12,11 @@ const routes = [
     path: '/admin',
     name: 'admin-',
     component: () => import('../views/AdminView.vue'),
-    beforeEnter() {
-      if(!Cookies.get('myUser')){
-        router.push({name: 'login-'})
-      }
-    }
+    // beforeEnter() {
+    //   if(!Cookies.get('myUser')){
+    //     router.push({name: 'login-'})
+    //   }
+    // }
   },
   {
     path: '/login',

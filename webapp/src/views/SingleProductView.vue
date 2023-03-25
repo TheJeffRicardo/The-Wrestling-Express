@@ -19,7 +19,8 @@
           <input type="text" placeholder="0" :value="counter" readonly>
           <button @click.prevent="increase"><i class="bi bi-plus-lg"></i></button>
         </div>
-        <button class="button" v-on:click="addItemToCart(items)">Add to Cart  <i class="bi bi-cart4"></i></button>
+        <button class="button" v-on:click="addToCart(user, items)">Add to Cart  <i class="bi bi-cart4"></i></button>
+        <router-link :to="{name: 'product-'}" class="p-5" style="text-decoration: none; color: #333;"><i class="bi bi-arrow-left"></i>Back To Shop</router-link>
       </div>
     </div>
   </div>
@@ -28,6 +29,7 @@
 <script>
 import {computed} from '@vue/runtime-core';
 import { useStore  } from 'vuex';
+import Cookies from 'js-cookie'
 import Spinner from '@/components/SpinnerComp.vue'
 export default {
   name: 'single-product',
@@ -36,9 +38,20 @@ export default {
   },
   setup() {
       const store = useStore()
+      store.dispatch("fetchItemsFromCart")
+      let user = Cookies.get('userInfo')
+      const addToCart = (items)=> {
+        store.dispatch("addItemToCart", {
+          user_id: user,
+          sup_id: items?.sup_id
+        })
+      }
+      const userMsg = computed( ()=>store.state.message )
       const items = computed( ()=> store.state.product)
       return {
-        items
+        items,
+        addToCart,
+        userMsg
       }
   },
   data(){

@@ -1,69 +1,58 @@
 <template>
-<Spinner class="spinner" v-if="isLoading" />
+<!-- <Spinner class="spinner" v-if="isLoading" />
         <div v-else>
-          </div>
+          <img :src=cart.sup_URL alt="picsofsuperstars" style="width: 15rem;">
+          </div> -->
 
-<div class="bg">
-
-	<div class="row mainRow">
-
-		<div class="col-sm-8">
-			<div class="card card-cascade wider shadow p-3 mb-5"  v-for="cart in fetch">
-
-				<div class=" overlay text-center">
-					<img :src=cart.sup_URL alt="picsofsuperstars" style="width: 15rem;">
-					<a>
-						<div class="mask rgba-white-slight"></div>
-					</a>
-				</div>
-
-				<div class="desc">
-          <p>{{cart.sup_name}}</p>
-          <p>R{{cart.sup_price}}</p>
-
-				</div>
-			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="card card-cascade card-ecommerce wider shadow p-3 mb-5 ">
-
-				<div class="card-body card-body-cascade">
-
-					<div class="card2decs">
-
-						<p class="heading1"><strong>ZABHL90</strong></p>
-						<p class="quantity">Qty <span class="float-right text1">30</span></p>
-						<p class="subtotal">Subtotal<span class="float-right text1">$1,240</span></p>
-						<p class="shipping">Shipping<span class="float-right text1">Free</span></p>
-						<p class="promocode">Promo Code<span class="float-right text1">-$100</span></p>
-						<p class="total"><strong>Total</strong><span class="float-right totalText1">$<span class="totalText2">1,140</span></span></p>
-
-					</div>
-
-					<div class="payment">
-
-						<p class="heading2"><strong>Payment Details</strong></p>
-						<p class="cardAndExpire">Card Number<span class="float-right">Expiry</span></p>
-            <p class="cardAndExpireValue">161617161816188<span class="float-right">26/11</span></p>
-						<p class="nameAndcvc" style="margin-bottom:-10px;">Cardholder name<span class="float-right">CVC</span></p>
-						<p class="nameAndcvcValue">Mr. Example<span class="float-right">010</span></p>
-
-					</div>
-
-					<a href="" class="purchaseLink">
-						<div class="card-footer text-center">
-							PURCHASE &#8594;
-						</div>
-					</a>
-
-				</div>
-			</div>
-		</div>
-
-
-	</div>
-</div>
+          <div class="card">
+            <div class="row">
+                <div class="col-md-8 cart">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col text-dark"><h4><b>Shopping Cart</b></h4></div>
+                        </div>
+                    </div>    
+                    <div class="row border-top border-bottom">
+                        <div class="row main align-items-center" v-for="cart in fetch">
+                            <div class="col-2"><img :src=cart.sup_URL alt="picsofsuperstars" style="width: 5rem;"></div>
+                            <div class="col">
+                                <div class="row text-muted"><p>{{cart.sup_name}}</p></div>
+                                <div class="row text-muted"><p>R{{cart.sup_price}}</p></div>
+                            </div>
+                            <div class="col">
+                              <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+                          </div>
+                          <div class="col"><span class="close"> <button>Delete</button>
+                            <button>Update</button></span></div>
+                        </div>
+                    </div>
+                    <div class="back-to-shop"><router-link :to="{name: 'product-'}"><i class="bi bi-arrow-left"></i>Back To Shop</router-link></div>
+                    
+      
+                </div>
+                <div class="col-md-4 summary">
+                    <div><h5><b>Summary</b></h5></div>
+                    <hr>
+                    <form>
+                        <p>SHIPPING</p>
+                        <select>
+                          <option class="text-muted">Standard-Delivery- R5.00</option>
+                          <option class="text-muted">Standard-Delivery- R15.00</option>
+                          <option class="text-muted">Standard-Delivery- R20.00</option>
+                          <option class="text-muted">Standard-Delivery- R44.00</option>
+                          <option class="text-muted">Standard-Delivery- R100.00</option>
+                        </select>
+                        <p>GIVE CODE</p>
+                        <input id="code" placeholder="Enter your code">
+                    </form>
+                    <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                        <div class="col">TOTAL PRICE:</div>
+                        <div class="col text-right"><p>R{{totalPrice}}</p></div>
+                    </div>
+                    <button class="btn">CHECKOUT</button>
+                </div>
+            </div>
+        </div>
 </template>
 <script>
 import {computed} from '@vue/runtime-core';
@@ -87,6 +76,16 @@ export default {
         isLoading: true
       }
     },
+    computed: {
+      totalPrice() {
+      let itemPrice = 0
+      let cartItems = this.$store.state.cart;
+      cartItems.forEach((product) => {
+        itemPrice += parseFloat(product.sup_price)
+      })
+      return itemPrice
+    },
+    },
     created(){
       setTimeout(()=>{
         this.isLoading = false
@@ -95,130 +94,148 @@ export default {
 }
 </script>
 <style scoped>
-.bg{
+body{
+  background: #ddd;
+  vertical-align: middle;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.title{
+  margin-bottom: 5vh;
+}
+.card{
+  margin: auto;
+  max-width: 950px;
+  width: 90%;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 1rem;
+  border: transparent;
+}
+@media(max-width:767px){
+  .card{
+      margin: 3vh auto;
+  }
+}
+.cart{
+  background-color: #fff;
+  padding: 4vh 5vh;
+  border-bottom-left-radius: 1rem;
+  border-top-left-radius: 1rem;
+}
+@media(max-width:767px){
+  .cart{
+      padding: 4vh;
+      border-bottom-left-radius: unset;
+      border-top-right-radius: 1rem;
+  }
+}
+.summary{
+  background-color: #ddd;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  padding: 4vh;
+  color: rgb(65, 65, 65);
+}
+@media(max-width:767px){
+  .summary{
+  border-top-right-radius: unset;
+  border-bottom-left-radius: 1rem;
+  }
+}
+.summary .col-2{
+  padding: 0;
+}
+.summary .col-10
+{
+  padding: 0;
+}.row{
+  margin: 0;
+}
+.title b{
+  font-size: 1.5rem;
+}
+.main{
+  margin: 0;
+  padding: 2vh 0;
   width: 100%;
-     height:auto;
-   min-height:100vh;
- background-color: #cccccc;
-     background-size: 100% 100%;
-     background-position: top center;
-     margin:auto;
- }
- 
- .mainRow{
- 
-   margin-left: 10%;
-   margin-right: 10%;
- }
- 
- p{
-    margin:0px; }
- 
- .desc{
-   background-color: #f0edeb;
-   margin-top: 5%;
-   margin-left:0;
-   margin-right:50px;
-   margin-bottom: 4%;
-   }
- 
- 
-   .card-body{
-     padding:0;
-     margin:0;
-       margin-top:10%;
- 
-   }
-   
-   div.card.main{
-     margin:0px!important;
-   }
- 
- 
- .card{
-   padding:0!important;
-   margin-top:40px;
- }
- 
- 
- 
- 
- .quantity,.shipping,.promocode,.subtotal,.cardAndExpire,.nameAndcvc{
-   margin:5%;
-   color:#6c757d!important
- }
- 
- .heading1{
-     margin:5%;
- font-size: 25px;
- }
- 
- .heading2{
-     margin:5%;
- margin-top:15%;
- font-size: 20px;
- }
- 
- .payment{
-   background-color: #f0edeb;
-   padding:3px;
-   margin-top: 15%;
- }
- 
- .text1{
- color:black;
- font-weight: 700;
- }
- 
- .card-footer{
- background-color: black;
- color:white;
- }
- 
- .purchaseLink{
-   text-decoration: none;
- }
- 
- .row1{
- font-size:12px;
- }
- 
- .row2{
-   font-weight: 600;
- }
- 
- .subRow{
-   margin-left:10%;
- margin-bottom: 2%;
-   margin-top:5%;
- }
- 
- p.cardAndExpireValue,p.nameAndcvcValue{
-   margin:5%;
-   margin-bottom: 10%;
- font-weight: 600;}
- 
- p.nameAndcvc,p.cardAndExpire{
-   margin-bottom: -10px;
- }
- 
- .total{
-   margin:5%;
- }
- 
- .totalText{
-   font-weight: 700;
- 
- }
- .totalText2{
-  font-weight: 700;
-   font-size:30px;
- }
- 
- .card-img-top {
-     width: 100%;
-     border-top-left-radius: calc(.25rem - 1px);
-     border-top-right-radius: calc(.25rem - 1px);
-     height: 430px;
- }
+}
+.col-2, .col{
+  padding: 0 1vh;
+}
+a{
+  padding: 0 1vh;
+}
+.close{
+  margin-left: auto;
+  font-size: 0.7rem;
+}
+img{
+  width: 3.5rem;
+}
+.back-to-shop{
+  margin-top: 4.5rem;
+}
+h5{
+  margin-top: 4vh;
+}
+hr{
+  margin-top: 1.25rem;
+}
+form{
+  padding: 2vh 0;
+}
+select{
+  border: 1px solid rgba(0, 0, 0, 0.137);
+  padding: 1.5vh 1vh;
+  margin-bottom: 4vh;
+  outline: none;
+  width: 100%;
+  background-color: rgb(247, 247, 247);
+}
+input{
+  border: 1px solid rgba(0, 0, 0, 0.137);
+  padding: 1vh;
+  margin-bottom: 4vh;
+  outline: none;
+  width: 100%;
+  background-color: rgb(247, 247, 247);
+}
+input:focus::-webkit-input-placeholder
+{
+    color:transparent;
+}
+.btn{
+  background-color: #000;
+  border-color: #000;
+  color: white;
+  width: 100%;
+  font-size: 0.7rem;
+  margin-top: 4vh;
+  padding: 1vh;
+  border-radius: 0;
+}
+.btn:focus{
+  box-shadow: none;
+  outline: none;
+  box-shadow: none;
+  color: white;
+  transition: none; 
+}
+.btn:hover{
+  color: white;
+}
+a{
+  color: black; 
+}
+a:hover{
+  color: black;
+  text-decoration: none;
+}
+#code{
+  background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253) , rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+  background-repeat: no-repeat;
+  background-position-x: 95%;
+  background-position-y: center;
+}
 </style>

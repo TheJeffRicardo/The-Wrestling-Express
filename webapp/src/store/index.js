@@ -12,11 +12,12 @@ export default createStore({
     logOut: null,
     products: null,
     product: null,
-    cart: null,
+    cart: [],
     token: null,
     showSpinner: false,
     message: null,
     counter : 0,
+    total: 0,
     asc: true
   },
   getters(state) {
@@ -53,6 +54,9 @@ export default createStore({
     setCounter(state, value){
       state.counter = value
     },
+    setTotal(state, value){
+      state.total = value
+    },
     setCart(state, value) {
       state.cart = value
     },
@@ -79,7 +83,6 @@ export default createStore({
         context.commit('setToken', jwToken)
         Cookies.set('myUser', jwToken)
         Cookies.set('userInfo', result.user_id)
-        console.log(result.user_id);
       }else{
         context.commit('setMessage', err)
       }
@@ -194,16 +197,6 @@ export default createStore({
     logOut(context){
       context.commit('setLogout')
     },
-    async addItemToCart(context, id){
-      const res = await axios.post(`${api}user/${id}/cart`)
-      let {result, msg, err} = await res.data
-      if(result){
-        context.commit('setCart', result[0])
-        context.commit('setMessage', msg)
-      }else{
-        context.commit('setMessage', err)
-      }
-    },
     async fetchItemsFromCart(context) {
       let user = Cookies.get('userInfo')
       const res = await axios.get(`${api}user/${user}/cart`)
@@ -211,6 +204,18 @@ export default createStore({
       if(results){
         context.commit('setCart', results)
         console.log(results.user_id)
+      }else{
+        context.commit('setMessage', err)
+      }
+    },
+    async addItemToCart(context, payload){
+      let user = Cookies.get('userInfo')
+      context.commit('setMessage', 'This may take a while')
+      const res = await axios.post(`${api}user/${user}/cart`, payload)
+      let {result, msg, err} = await res.data
+      if(result){
+        context.commit('setCart', result)
+        context.commit('setMessage', msg)
       }else{
         context.commit('setMessage', err)
       }
